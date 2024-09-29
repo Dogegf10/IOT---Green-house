@@ -1,0 +1,116 @@
+# ============================
+# ESP-IDF .gitignore Template
+# ============================
+
+# ============================
+# Build directories
+# ============================
+/build/
+./build/
+
+# ============================
+# SDK Configuration Files
+# ============================
+sdkconfig
+sdkconfig.*
+sdkconfig.defaults
+
+# ============================
+# CMake Files
+# ============================
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+export_compile_commands.json
+
+# ============================
+# Generated Binary Files
+# ============================
+*.bin
+*.elf
+*.map
+*.hex
+
+# ============================
+# Partition Table
+# ============================
+/partition_table/
+*.csv
+
+# ============================
+# ESP-IDF Specific Files
+# ============================
+.esp-idf/
+idf_component.yml
+component.mk
+
+# ============================
+# Object and Dependency Files
+# ============================
+*.o
+*.d
+*.dep
+
+# ============================
+# Toolchain Files
+# ============================
+/tools/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# ============================
+# IDE and Editor Settings
+# ============================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# CLion
+.idea/
+*.iml
+
+# Eclipse
+.settings/
+*.launch
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Other Editors
+*~
+*.swp
+*.swo
+
+# ============================
+# OS Generated Files
+# ============================
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+*.temp
+
+# ============================
+# Log Files
+# ============================
+*.log
+
+# ============================
+# Python Virtual Environments
+# ============================
+/venv/
+*.pyc
+__pycache__/
+
+# ============================
+# Custom Ignore Rules
+# ============================
+
+# Add any project-specific files or directories you want to ignore below this line
+# For example:
+# /my_custom_folder/
