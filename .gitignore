@@ -44,6 +44,8 @@ export_compile_commands.json
 .esp-idf/
 idf_component.yml
 component.mk
+components
+managed_components
 
 # ============================
 # Object and Dependency Files
