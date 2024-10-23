@@ -1,19 +1,21 @@
 @startuml
-rectangle "FreeRTOS Tasks\n(Event Handling & Scheduling)" as FreeRTOS
-rectangle "Wi-Fi Module\n(Connect to Wi-Fi Network)" as WiFi
-rectangle "MQTT Client\n(Publish Data)" as MQTT
-rectangle "DHT11 Sensor\n(Temperature & Humidity Data)" as DHT11
-rectangle "TSL2591 Light Sensor (I2C)\n(Ambient Light Level Data)" as TSL2591
-rectangle "RGB LED Controller\n(Visual Feedback)" as LED
-rectangle "MQTT Broker\n(Remote Server)" as Broker
+component "Main\n(program start)\nesp_wifi_connect()\nrgb_led_set_color()\ntsl2591_get_lux()\nwater_pump_start()\nwater_pump_stop()\nwater_pump_read_humidity()\n Handle LED changes" as Main
+component "Wi-Fi Module\n(Connect to Wi-Fi Network)\nesp_mqtt_client_publish()\nrgb_led_set_color()" as WiFi
+component "MQTT Client\n(Publish Data)" as MQTT
+component "DHT11 Sensor\n(Temperature & Humidity Data)\ndht11_read_data()" as DHT11
+component "TSL2591 Light Sensor (I2C)\n(Ambient Light Level Data)" as TSL2591
+component "RGB LED Controller\n(Visual Feedback)" as LED
+component "MQTT Broker\n(Remote Server)\nPublish Sensor Data" as Broker
+component "Water Pump\n(Start/Stop & Read Humidity)" as WaterPump
 
-FreeRTOS --> WiFi
+Main --> WiFi
 WiFi --> MQTT
-FreeRTOS --> DHT11
-WiFi --> LED
-FreeRTOS --> LED : Wi-Fi events
-FreeRTOS --> TSL2591
+Main --> DHT11
+WiFi --> LED 
+Main --> LED
+Main --> TSL2591
 MQTT --> Broker
+Main --> WaterPump
 
-LED <-- FreeRTOS : Data transmission events
+LED <-- Main
 @enduml
