@@ -1,0 +1,19 @@
+@startuml
+rectangle "FreeRTOS Tasks\n(Event Handling & Scheduling)" as FreeRTOS
+rectangle "Wi-Fi Module\n(Connect to Wi-Fi Network)" as WiFi
+rectangle "MQTT Client\n(Publish Data)" as MQTT
+rectangle "DHT11 Sensor\n(Temperature & Humidity Data)" as DHT11
+rectangle "TSL2591 Light Sensor (I2C)\n(Ambient Light Level Data)" as TSL2591
+rectangle "RGB LED Controller\n(Visual Feedback)" as LED
+rectangle "MQTT Broker\n(Remote Server)" as Broker
+
+FreeRTOS --> WiFi
+WiFi --> MQTT
+FreeRTOS --> DHT11
+WiFi --> LED
+FreeRTOS --> LED : Wi-Fi events
+FreeRTOS --> TSL2591
+MQTT --> Broker
+
+LED <-- FreeRTOS : Data transmission events
+@enduml

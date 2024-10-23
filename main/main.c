@@ -94,8 +94,8 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 
 
 // Wi-Fi credentials
-#define WIFI_SSID "FASTSPEED-2.4Ghz" //"ESP32"
-#define WIFI_PASS "A6DE8ED8"         //"Fisse6969"
+#define WIFI_SSID "ESP32"     //"FASTSPEED-2.4Ghz" 
+#define WIFI_PASS "Fisse6969" //"A6DE8ED8"         
 
 // FreeRTOS event group to signal when we are connected
 static EventGroupHandle_t wifi_event_group;
