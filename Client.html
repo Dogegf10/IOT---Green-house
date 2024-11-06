@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IOT Project</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.2.8/mqtt.min.js"></script>
+    <style>
+        /* Add your CSS here */
+        #status-box {
+            width: 100px;
+            height: 40px;
+            text-align: center;
+            line-height: 37px;
+            color: white;
+            font-weight: bold;
+            margin-top: 20px;
+            border-radius: 50px;
+            position: absolute;
+            top: 0px;
+            right: 50px;
+        }
+
+        .connected {
+            background-color: rgb(1, 165, 1);
+        }
+
+        .disconnected {
+            background-color: red;
+        }
+
+        h1 {
+            text-align: center;
+        }
+        p {
+            position: absolute;
+            left:2%;
+        }
+
+        .data-display {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Smart Green House</h1>
+    <p>Data updates every minute</p>
+    <div id="status-box" class="disconnected">Connecting...</div>
+    
+    <div id="light-data" class="data-display">Light: No data</div>
+    <div id="temperature-data" class="data-display">Temperature: No data</div>
+    <div id="humidity-data" class="data-display">Humidity: No data</div>
+
+    <script>
+        // Replace these variables with your HiveMQ Cloud details
+        const brokerUrl = 'wss://09e3753d24fe4de28e5cf18365cf7a9a.s1.eu.hivemq.cloud:8884/mqtt';
+        const mqttUsername = 'HTML-Side';
+        const mqttPassword = 'Nemkode1122';
+
+        // Define your MQTT topics
+        const lightTopic = 'sensor/light';
+        const temperatureTopic = 'sensor/temperature';
+        const humidityTopic = 'sensor/humidity';
+
+        const statusBox = document.getElementById('status-box');
+        const lightDisplay = document.getElementById('light-data');
+        const temperatureDisplay = document.getElementById('temperature-data');
+        const humidityDisplay = document.getElementById('humidity-data');
+
+        // Connect to the HiveMQ Cloud broker
+        const client = mqtt.connect(brokerUrl, {
+            username: mqttUsername,
+            password: mqttPassword
+        });
+
+        client.on('connect', function () {
+            console.log('Connected to HiveMQ Cloud');
+            statusBox.innerHTML = 'Connected';
+            statusBox.className = 'connected'; // Change color to green
+
+            // Subscribe to all three topics
+            client.subscribe([lightTopic, temperatureTopic, humidityTopic], function (err) {
+                if (!err) {
+                    console.log('Subscribed to topics:', [lightTopic, temperatureTopic, humidityTopic]);
+                } else {
+                    console.error('Failed to subscribe:', err);
+                }
+            });
+        });
+
+        client.on('message', function (topic, message) {
+            const data = message.toString();
+            console.log('Received message:', topic, data);
+
+            // Check which topic the message belongs to and update the respective display
+            if (topic === lightTopic) {
+                lightDisplay.innerHTML = 'Light: ' + data + ' lux';
+            } else if (topic === temperatureTopic) {
+                temperatureDisplay.innerHTML = 'Temperature: ' + data + ' °C';
+            } else if (topic === humidityTopic) {
+                humidityDisplay.innerHTML = 'Humidity: ' + data + ' %';
+            }
+        });
+
+        client.on('error', function (err) {
+            console.error('Connection error:', err);
+            statusBox.innerHTML = 'Error connecting';
+            statusBox.className = 'disconnected'; // Change color to red
+        });
+    </script>
+</body>
+</html>
