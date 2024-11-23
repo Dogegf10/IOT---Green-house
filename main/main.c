@@ -459,10 +459,10 @@ void app_main(void) {
     pump_control_init();
 
    while (1) {
-        // read_and_publish_dht11_data();
-        // read_and_publish_tsl2591_data();
+        read_and_publish_dht11_data();
+        read_and_publish_tsl2591_data();
         control_pump_based_on_humidity();
         check_wifi_and_reset_led();
-        vTaskDelay(1000 / portTICK_PERIOD_MS);  // Wait for 1 minute
+        vTaskDelay(60000 / portTICK_PERIOD_MS);  // Wait for 1 minute
     }
 }
